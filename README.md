@@ -1,1 +1,1 @@
-# aci
+The technology stack I made use of was AMPPS, using PHP, MySQL, and JavaScript as my main languages. I used the base Apache server in AMPPS to host the webpage and used Visual Studio Code to write the actual code.
