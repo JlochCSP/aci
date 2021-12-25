@@ -7,15 +7,12 @@
             function getCourses(){
                 var databox = document.getElementById("courses");
                 var httpReq = new XMLHttpRequest();
-                //get data from getJSONDate.php
                 httpReq.open("GET", "getCourses.php", true);
                 httpReq.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                //function to load table
                 httpReq.onreadystatechange = function() {
-                    if(httpReq.readyState == 4 && httpReq.status == 200) {//if status is correct
-                        var data = JSON.parse(httpReq.responseText);//parse JSON data
-                        courses.innerHTML = "";//set to blank
-                        //start string to late insert into innerHTML
+                    if(httpReq.readyState == 4 && httpReq.status == 200) {
+                        var data = JSON.parse(httpReq.responseText);
+                        courses.innerHTML = "";
                         var HTML = "<table><tr><th>Id</th><th>Name</th><th>Status</th><th>Created At</th><th>Updated At</th></tr>"
                         for(var index in data.courses){
                             HTML += "<tr>";
@@ -50,13 +47,11 @@
                 id = document.forms[0].id.value;
                 httpReq.open("GET", "getCourseId.php?id=" + id, true);
                 httpReq.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                //function to load table
                 httpReq.onreadystatechange = function() {
-                    if(httpReq.readyState == 4 && httpReq.status == 200) {//if status is correct
-                        var data = JSON.parse(httpReq.responseText);//parse JSON data
+                    if(httpReq.readyState == 4 && httpReq.status == 200) {
+                        var data = JSON.parse(httpReq.responseText);
                         console.log(data.updatedAt);
-                        courseIDUpdate.innerHTML = "";//set to blank
-                        //start string to late insert into innerHTML
+                        courseIDUpdate.innerHTML = "";
                         var HTML = "<table><tr><th>Id</th><th>Name</th><th>Status</th><th>Created At</th><th>Updated At</th></tr>"
                         HTML += "<tr>";
                         HTML += "<td>" + data.id +  "</td>";
@@ -80,14 +75,14 @@
                 var httpReq = new XMLHttpRequest();
                 httpReq.open("POST", "postCourses.php", true);
                 httpReq.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                //function to load table
+                var data = JSON.stringify({"status": document.getElementById("statusN"),"name": document.getElementById("nameN")});
+                console.log(data);
+                httpReq.send(data);   
                 httpReq.onreadystatechange = function() {
-                    if(httpReq.readyState == 4 && httpReq.status == 201) {//if status is correct
+                    if(httpReq.readyState == 4 && httpReq.status == 201) {
                         courseIDUpdate.innerHTML = "<p>Course added</p>"
                     }
                 }
-                httpReq.send(document.forms[1].nameN.value, document.forms[1].status.value);   
-                httpReq.send("limit=4");
             }
         </script>
     </head>
@@ -105,7 +100,7 @@
             </div>
         </div>
         <div id="newCourse">
-            <form name="newCourseForm" action="#" method="POST" onsubmit="return postCourse()">
+            <form name="newCourseForm" action="#" method="GET" onsubmit="return postCourse()">
                 <label for="nameN">Name:</label>
                 <input type="text" id="nameN" name="nameN"/>
                 <label for="statusN">Status:</label>
